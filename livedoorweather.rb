@@ -74,11 +74,12 @@ end
 
 
 __END__
-puts LivedoorWether::get_weather(:city => '横浜')
-puts LivedoorWether::get_weather_summary(:city => '横浜')
-puts LivedoorWether::get_weather_date(:city => '横浜', :date => '今日')
-puts LivedoorWether::get_weather_date(:city => '横浜', :date => '明日')
-puts LivedoorWether::get_weather_date(:city => '横浜', :date => '明後日')
-puts LivedoorWether::get_weather_date(:city => '横浜', :date => '今日', :only => :image)
-puts LivedoorWether::get_weather_date(:city => '横浜', :date => '明日', :only => :image)
-puts LivedoorWether::get_weather_date(:city => '横浜', :date => '明後日', :only => :image)
+puts LivedoorWether.weather(:city => '横浜')
+puts LivedoorWether.weather_summary(:city => '横浜')
+puts LivedoorWether.weather_date(:city => '横浜', :date => '今日')
+puts LivedoorWether.weather_date(:city => '横浜', :date => '明日')
+puts LivedoorWether.weather_date(:city => '横浜', :date => '明後日')
+puts LivedoorWether.weather_date(:city => '横浜', :date => '今日', :only => :image)
+puts LivedoorWether.weather_date(:city => '横浜', :date => '明日', :only => :image)
+puts LivedoorWether.weather_date(:city => '横浜', :date => '明後日', :only => :image)
+
