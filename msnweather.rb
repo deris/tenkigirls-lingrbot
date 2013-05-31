@@ -7,20 +7,20 @@ module MSNWeather
   REGEX_URL = Regexp.escape('http://weather.jp.msn.com/local.aspx?wealocations=wc:')
 
 
-  def weather(options)
+  def weather(city)
     self.init_url if @url_hash.nil?
 
-    return unless @url_hash.key? options[:city]
+    return unless @url_hash.key? city
 
-    doc = Nokogiri::HTML(open(@url_hash[options[:city]]))
+    doc = Nokogiri::HTML(open(@url_hash[city]))
     self.scrape_foreigner(doc)
   end
 
-  def weather_date(options)
-    result = self.weather(options)
+  def weather_date(city, date, options)
+    result = self.weather(city)
     return if result.nil?
 
-    forecast = result.find { |f| f[:day] == options[:date] }
+    forecast = result.find { |f| f[:day] == date }
 
     if options.key? :only
       forecast && forecast[options[:only]]
@@ -106,10 +106,9 @@ module MSNWeather
 
 end
 
-__END__
-puts MSNWeather.weather(:city => '香港')
-puts MSNWeather.weather(:city => 'バンクーバー')
-puts MSNWeather.weather(:city => '北京')
-puts MSNWeather.weather(:city => 'ソウル')
-puts MSNWeather.weather(:city => 'バンコク')
+puts MSNWeather.weather('香港')
+puts MSNWeather.weather('バンクーバー')
+puts MSNWeather.weather('北京')
+puts MSNWeather.weather('ソウル')
+puts MSNWeather.weather('バンコク')
 
