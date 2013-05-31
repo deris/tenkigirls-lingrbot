@@ -156,13 +156,12 @@ class LivedoorWether
 
     url = URL_LIVEDOOR_WEATHER + '?city=' + CITY_HASH[args[:city]]
     res = Net::HTTP.get URI.parse url
-
-    return JSON.parse(res)
+    JSON.parse(res)
   end
 
   def self.get_weather_summary(args)
     json = self.get_weather(args)
-    return json['description']['text']
+    json['description']['text']
   end
 
   def self.get_weather_date(args)
@@ -175,14 +174,14 @@ class LivedoorWether
     forecast = json['forecasts'].find { |f| f['dateLabel'] == args[:date] }
 
     if args.key? :only
-      return forecast[args[:only].to_s] unless forecast.nil?
+      forecast[args[:only].to_s] unless forecast.nil?
     else
-      return forecast
+      forecast
     end
   end
 
   def self.get_supported_city
-    return CITY_HASH.keys
+    CITY_HASH.keys
   end
 end
 
@@ -196,4 +195,3 @@ puts LivedoorWether::get_weather_date(:city => '横浜', :date => '明後日')
 puts LivedoorWether::get_weather_date(:city => '横浜', :date => '今日', :only => :image)
 puts LivedoorWether::get_weather_date(:city => '横浜', :date => '明日', :only => :image)
 puts LivedoorWether::get_weather_date(:city => '横浜', :date => '明後日', :only => :image)
-
