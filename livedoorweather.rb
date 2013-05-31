@@ -3,7 +3,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-class LivedoorWether
+module LivedoorWether
   URL_LIVEDOOR_WEATHER = 'http://weather.livedoor.com/forecast/webservice/json/v1'
   CITY_HASH = {
     "稚内" => "011000",
