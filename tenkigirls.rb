@@ -14,7 +14,7 @@ post '/' do
   json["events"].select { |e| e["message"] }.map {|e|
     case e["message"]["text"]
     when /^(?:(今日|明日|明後日)の)?天気$/m
-      (HELP % [$&, $1]) + girls_gobi
+      (HELP % [$&, $1]) + GIRLS_GOBI.sample
     when /^天気地方リスト$/m
       LivedoorWether::get_supported_city.join(',')
     when /^(?:(今日|明日|明後日)の(.+)|(.+)の(今日|明日|明後日))の天気$/m
@@ -53,10 +53,6 @@ GIRLS_GOBI = [
   'てア・ゲ・ル',
   'ます。とミカサは報告します。',
 ]
-
-def girls_gobi
-  GIRLS_GOBI.sample
-end
 
 
 __END__
