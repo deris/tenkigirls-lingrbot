@@ -3,6 +3,7 @@ require 'json'
 require 'sinatra'
 
 load 'livedoorweather.rb'
+load 'msnweather.rb'
 #load 'gyazo.rb'
 
 get '/' do
@@ -21,8 +22,9 @@ post '/' do
     when /^(?:(今日|明日|明後日)の(.+)|(.+)の(今日|明日|明後日))の天気$/m
       date = $1 || $4
       city = $2 || $3
-      tenki = LivedoorWether.weather_date(city, date, only: :image)
-      tenki && "#{tenki['title']}\n#{tenki['url']}"
+
+      wrap_livedoor_weather_date(city, date) ||
+      wrap_msn_weather_date(city, date)
     when /^(.+)の天気((?:を?教えて)?)$/m
       tenki = LivedoorWether.weather_summary($1)
       #$2.empty? ? tenki : tenki.to_gyazo
@@ -31,6 +33,16 @@ post '/' do
       ''
     end
   }.join
+end
+
+def wrap_livedoor_weather_date(city, date)
+  tenki = LivedoorWether.weather_date(city, date, only: :image)
+  tenki && "#{tenki['title']}\n#{tenki['url']}"
+end
+
+def wrap_msn_weather_date(city, date)
+  tenki = MSNWeather.weather_date(city, date, {})
+  tenki && "#{tenki[:weather]}\n#{tenki[:url]}"
 end
 
 HELP = 'XXXの%s で%s天気を教え'
