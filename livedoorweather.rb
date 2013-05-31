@@ -172,7 +172,7 @@ module LivedoorWether
     forecast = json['forecasts'].find { |f| f['dateLabel'] == date }
 
     if args.key? :only
-      forecast[args[:only].to_s] unless forecast.nil?
+      forecast && forecast[args[:only].to_s]
     else
       forecast
     end
