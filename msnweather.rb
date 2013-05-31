@@ -7,12 +7,12 @@ module MSNWeather
   REGEX_URL = Regexp.escape('http://weather.jp.msn.com/local.aspx?wealocations=wc:')
 
 
-  def weather_of(city)
+  def weather(options)
     self.init_url if @url_hash.nil?
 
-    return unless @url_hash.key? city
+    return unless @url_hash.key? options[:city]
 
-    doc = Nokogiri::HTML(open(@url_hash[city]))
+    doc = Nokogiri::HTML(open(@url_hash[options[:city]]))
     self.scrape_foreigner(doc)
   end
 
