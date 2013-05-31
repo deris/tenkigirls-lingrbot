@@ -16,7 +16,7 @@ module MSNWeather
     self.scrape_foreigner(doc)
   end
 
-  module_function :weather_of
+  module_function :weather
 
   private
   def self.init_url
@@ -94,9 +94,9 @@ module MSNWeather
 end
 
 __END__
-puts MSNWeather.weather_of('香港')
-puts MSNWeather.weather_of('バンクーバー')
-puts MSNWeather.weather_of('北京')
-puts MSNWeather.weather_of('ソウル')
-puts MSNWeather.weather_of('バンコク')
+puts MSNWeather.weather(:city => '香港')
+puts MSNWeather.weather(:city => 'バンクーバー')
+puts MSNWeather.weather(:city => '北京')
+puts MSNWeather.weather(:city => 'ソウル')
+puts MSNWeather.weather(:city => 'バンコク')
 
