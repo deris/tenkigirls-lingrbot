@@ -152,11 +152,10 @@ module LivedoorWether
 
   module_function
 
-  def weather(args)
-    return unless args.key? :city
-    return unless CITY_HASH.key? args[:city]
+  def weather(city:, **args)
+    return unless CITY_HASH.key? city
 
-    url = "#{URL_LIVEDOOR_WEATHER}?city=#{CITY_HASH[args[:city]]}"
+    url = "#{URL_LIVEDOOR_WEATHER}?city=#{CITY_HASH[city]}"
     res = Net::HTTP.get URI.parse url
     JSON.parse(res)
   end
@@ -166,14 +165,11 @@ module LivedoorWether
     json['description']['text']
   end
 
-  def weather_date(args)
-    return unless args.key? :city
-    return unless args.key? :date
-
-    json = self.weather(args)
+  def weather_date(city:, date:, **args)
+    json = self.weather(city: city, date: date, **args)
     return if json.nil?
 
-    forecast = json['forecasts'].find { |f| f['dateLabel'] == args[:date] }
+    forecast = json['forecasts'].find { |f| f['dateLabel'] == date }
 
     if args.key? :only
       forecast[args[:only].to_s] unless forecast.nil?
