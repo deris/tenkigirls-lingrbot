@@ -3,6 +3,7 @@ require 'json'
 require 'sinatra'
 
 load 'livedoorweather.rb'
+load 'gyazo.rb'
 
 get '/' do
   "lingr:TenkiGirls"
@@ -22,8 +23,9 @@ post '/' do
       city = $2 || $3
       tenki = LivedoorWether.weather_date({:city => city, :date => date, :only => :image})
       tenki && "#{tenki['title']}\n#{tenki['url']}"
-    when /^(.+)の天気$/m
-      LivedoorWether.weather_summary({:city => $1})
+    when /^(.+)の天気((?:を?教えて)?)$/m
+      tenki = LivedoorWether.weather_summary({:city => $1})
+      $2.empty? ? tenki : tenki.to_gyazo
     else
       # do nothing
       ''
