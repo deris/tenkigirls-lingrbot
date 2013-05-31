@@ -49,6 +49,48 @@ module MSNWeather
 
     tenday
   end
+
+  # 市区町村
+  def self.scrape_japanese_area(doc)
+  end
+
+  # 代表都市
+  def self.scrape_japanese_spot(doc)
+    twoday = []
+    doc.css('div#twoday > div > div > div:first-child').each do |node|
+      children = node.children
+      twoday << {
+        :day => children[0].text,
+        :date => children[0].text,
+        :url => children[1]['src'],
+        :weather => children[2].text,
+      }
+    end
+
+    return if twoday.empty?
+
+    sixday = self.scrape_sixday(doc)
+
+    twoday + sixday
+  end
+
+  def self.scrape_sixday(doc)
+    sixday = []
+    doc.css('div#sixday table').each do |node|
+      set = node.children[1,2].map { |c| c.children[1,5] }
+      set[0].zip(set[1]).each do |child|
+        sixday << {
+          :day => child[0].text,
+          :date => child[0].text,
+          :url => child[1]['src'],
+          :weather => child[2].text,
+        }
+      end
+    end
+
+    sixday
+  end
+
 end
 
 __END__
