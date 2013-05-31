@@ -152,7 +152,7 @@ module LivedoorWether
 
   module_function
 
-  def get_weather(args)
+  def weather(args)
     return unless args.key? :city
     return unless CITY_HASH.key? args[:city]
 
@@ -161,16 +161,16 @@ module LivedoorWether
     JSON.parse(res)
   end
 
-  def get_weather_summary(args)
-    json = self.get_weather(args)
+  def weather_summary(args)
+    json = self.weather(args)
     json['description']['text']
   end
 
-  def get_weather_date(args)
+  def weather_date(args)
     return unless args.key? :city
     return unless args.key? :date
 
-    json = self.get_weather(args)
+    json = self.weather(args)
     return if json.nil?
 
     forecast = json['forecasts'].find { |f| f['dateLabel'] == args[:date] }
@@ -182,7 +182,7 @@ module LivedoorWether
     end
   end
 
-  def get_supported_city
+  def supported_city
     CITY_HASH.keys
   end
 end
