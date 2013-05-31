@@ -154,7 +154,7 @@ class LivedoorWether
     return unless args.key? :city
     return unless CITY_HASH.key? args[:city]
 
-    url = URL_LIVEDOOR_WEATHER + '?city=' + CITY_HASH[args[:city]]
+    url = "#{URL_LIVEDOOR_WEATHER}?city=#{CITY_HASH[args[:city]]}"
     res = Net::HTTP.get URI.parse url
     JSON.parse(res)
   end
