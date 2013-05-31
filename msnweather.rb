@@ -16,7 +16,20 @@ module MSNWeather
     self.scrape_foreigner(doc)
   end
 
-  module_function :weather
+  def weather_date(options)
+    result = self.weather(options)
+    return if result.nil?
+
+    forecast = result.find { |f| f[:day] == options[:date] }
+
+    if options.key? :only
+      forecast && forecast[options[:only]]
+    else
+      forecast
+    end
+  end
+
+  module_function :weather, :weather_date
 
   private
   def self.init_url
