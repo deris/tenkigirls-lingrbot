@@ -45,20 +45,20 @@ module LivedoorWether
 
   module_function
 
-  def weather(options)
-    return unless CITY_HASH.key? options[:city]
-    JSON.parse(open("#{URL_LIVEDOOR_WEATHER}?city=#{CITY_HASH[options[:city]]}").read)
+  def weather(city)
+    return unless CITY_HASH.key? city
+    JSON.parse(open("#{URL_LIVEDOOR_WEATHER}?city=#{CITY_HASH[city]}").read)
   end
 
-  def weather_summary(options)
-    self.weather(options)['description']['text']
+  def weather_summary(city)
+    self.weather(city)['description']['text']
   end
 
-  def weather_date(options)
-    json = self.weather(options)
+  def weather_date(city, date, options)
+    json = self.weather(city)
     return if json.nil?
 
-    forecast = json['forecasts'].find { |f| f['dateLabel'] == options[:date] }
+    forecast = json['forecasts'].find { |f| f['dateLabel'] == date}
 
     if options.key? :only
       forecast && forecast[options[:only].to_s]
