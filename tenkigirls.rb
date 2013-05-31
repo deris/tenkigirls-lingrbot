@@ -16,14 +16,14 @@ post '/' do
     when /^(?:(今日|明日|明後日)の)?天気$/m
       (HELP % [$&, $1]) + GIRLS_GOBI.sample
     when /^天気地方リスト$/m
-      LivedoorWether::get_supported_city.join(',')
+      LivedoorWether.get_supported_city.join(',')
     when /^(?:(今日|明日|明後日)の(.+)|(.+)の(今日|明日|明後日))の天気$/m
       date = $1 || $4
       city = $2 || $3
-      tenki = LivedoorWether::get_weather_date(:city => city, :date => date, :only => :image)
+      tenki = LivedoorWether.get_weather_date(:city => city, :date => date, :only => :image)
       tenki['title'] unless tenki.nil?
     when /^(.+)の天気$/m
-      LivedoorWether::get_weather_summary(:city => $1)
+      LivedoorWether.get_weather_summary(:city => $1)
     else
       # do nothing
       ''
