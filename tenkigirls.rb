@@ -11,24 +11,24 @@ end
 post '/' do
   content_type :text
   json = JSON.parse(request.body.string)
-  json["events"].select { |e| e["message"] }.map do |e|
+  json["events"].select { |e| e["message"] }.map {|e|
     case e["message"]["text"]
     when /^(?:(今日|明日|明後日)の)?天気$/m
-      return (HELP % [$&, $1]) + girls_gobi
+      (HELP % [$&, $1]) + girls_gobi
     when /^天気地方リスト$/m
-      return LivedoorWether::get_supported_city.join(',')
+      LivedoorWether::get_supported_city.join(',')
     when /^(?:(今日|明日|明後日)の(.+)|(.+)の(今日|明日|明後日))の天気$/m
       date = $1 || $4
       city = $2 || $3
       tenki = LivedoorWether::get_weather_date(:city => city, :date => date, :only => :image)
-      return tenki['title'] unless tenki.nil?
+      tenki['title'] unless tenki.nil?
     when /^(.+)の天気$/m
-      return LivedoorWether::get_weather_summary(:city => $1)
+      LivedoorWether::get_weather_summary(:city => $1)
     else
       # do nothing
-      return
+      ''
     end
-  end
+  }.join
 end
 
 HELP = 'XXXの%s で%s天気を教え'
