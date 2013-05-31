@@ -150,7 +150,9 @@ module LivedoorWether
     "与那国島" => "474020",
   }
 
-  def self.get_weather(args)
+  module_function
+
+  def get_weather(args)
     return unless args.key? :city
     return unless CITY_HASH.key? args[:city]
 
@@ -159,12 +161,12 @@ module LivedoorWether
     JSON.parse(res)
   end
 
-  def self.get_weather_summary(args)
+  def get_weather_summary(args)
     json = self.get_weather(args)
     json['description']['text']
   end
 
-  def self.get_weather_date(args)
+  def get_weather_date(args)
     return unless args.key? :city
     return unless args.key? :date
 
@@ -180,7 +182,7 @@ module LivedoorWether
     end
   end
 
-  def self.get_supported_city
+  def get_supported_city
     CITY_HASH.keys
   end
 end
