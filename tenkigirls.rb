@@ -16,7 +16,7 @@ post '/' do
     when /^(?:(今日|明日|明後日)の)?天気$/m
       (HELP % [$&, $1]) + GIRLS_GOBI.sample
     when /^天気地方リスト$/m
-      LivedoorWether.cities_supported.join(',')
+      LivedoorWether.cities_supported.join(', ')
     when /^(?:(今日|明日|明後日)の(.+)|(.+)の(今日|明日|明後日))の天気$/m
       date = $1 || $4
       city = $2 || $3
