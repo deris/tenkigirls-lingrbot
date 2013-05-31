@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 require 'net/http'
-require 'uri'
-require 'json'
+require 'open-uri'
 
 module LivedoorWether
   URL_LIVEDOOR_WEATHER = 'http://weather.livedoor.com/forecast/webservice/json/v1'
@@ -48,10 +47,7 @@ module LivedoorWether
 
   def weather(city:, **args)
     return unless CITY_HASH.key? city
-
-    url = "#{URL_LIVEDOOR_WEATHER}?city=#{CITY_HASH[city]}"
-    res = Net::HTTP.get URI.parse url
-    JSON.parse(res)
+    JSON.parse(open("#{URL_LIVEDOOR_WEATHER}?city=#{CITY_HASH[city]}").get)
   end
 
   def weather_summary(args)
