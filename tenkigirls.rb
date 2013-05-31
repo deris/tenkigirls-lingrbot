@@ -21,7 +21,7 @@ post '/' do
     when /^(?:(今日|明日|明後日)の(.+)|(.+)の(今日|明日|明後日))の天気$/m
       date = $1 || $4
       city = $2 || $3
-      tenki = LivedoorWether.weather_date({city, date, only: :image})
+      tenki = LivedoorWether.weather_date(city, date, only: :image)
       tenki && "#{tenki['title']}\n#{tenki['url']}"
     when /^(.+)の天気((?:を?教えて)?)$/m
       tenki = LivedoorWether.weather_summary($1)
