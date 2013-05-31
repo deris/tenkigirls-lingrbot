@@ -21,7 +21,7 @@ post '/' do
       date = $1 || $4
       city = $2 || $3
       tenki = LivedoorWether.weather_date(city: city, date: date, only: :image)
-      tenki && tenki['title']
+      tenki && "#{tenki['title']}\n#{tenki['url']}"
     when /^(.+)の天気$/m
       LivedoorWether.weather_summary(city: $1)
     else
