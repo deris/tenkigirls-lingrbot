@@ -106,6 +106,7 @@ module MSNWeather
 
 end
 
+__END__
 puts MSNWeather.weather('香港')
 puts MSNWeather.weather('バンクーバー')
 puts MSNWeather.weather('北京')
