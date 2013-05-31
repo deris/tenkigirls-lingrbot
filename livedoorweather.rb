@@ -51,8 +51,7 @@ module LivedoorWether
   end
 
   def weather_summary(args)
-    json = self.weather(args)
-    json['description']['text']
+    self.weather(args)['description']['text']
   end
 
   def weather_date(city:, date:, **args)
