@@ -67,7 +67,7 @@ module LivedoorWether
     end
   end
 
-  def supported_city
+  def cities_supported
     CITY_HASH.keys
   end
 end
