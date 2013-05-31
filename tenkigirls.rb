@@ -55,7 +55,7 @@ GIRLS_GOBI = [
 ]
 
 def girls_gobi
-  return GIRLS_GOBI[rand GIRLS_GOBI.length]
+  GIRLS_GOBI[rand GIRLS_GOBI.length]
 end
 
 
