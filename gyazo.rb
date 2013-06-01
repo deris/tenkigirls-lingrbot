@@ -23,7 +23,7 @@ module StringToGyazo
       y += 12
     end
     surface.write_to_png(out)
-	boundary = '----BOUNDARYBOUNDARY----'
+    boundary = '----BOUNDARYBOUNDARY----'
     id = "foo"
 
     data = <<EOF
