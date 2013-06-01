@@ -5,6 +5,7 @@ require 'open-uri'
 module MSNWeather
   TOP_URL = 'http://weather.jp.msn.com/'
   REGEX_URL = Regexp.escape('http://weather.jp.msn.com/local.aspx?wealocations=wc:')
+  SEARCH_URL = 'http://weather.jp.msn.com/search.aspx?weasearchstr='
 
 
   def weather(city)
@@ -29,7 +30,21 @@ module MSNWeather
     end
   end
 
-  module_function :weather, :weather_date
+  def search(city)
+    doc = Nokogiri::HTML(open(URI.escape(SEARCH_URL + city)))
+    result = doc.css('table#result').first
+    result_city = city
+    if not result.nil?
+      result_city = result.text
+      doc = Nokogiri::HTML(open(result['href']))
+    end
+
+    self.scrape_japanese_spot(doc) ||
+    self.scrape_japanese_area(doc) ||
+    self.scrape_foreigner(doc)
+  end
+
+  module_function :weather, :weather_date, :search
 
   private
   def self.init_url
