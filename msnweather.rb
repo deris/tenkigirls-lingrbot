@@ -43,7 +43,7 @@ module MSNWeather
       if result
         Nokogiri::HTML(open(TOP_URL + result['href']))
       else
-        doc
+        doc0
 
     self.scrape_japanese_spot(doc) ||
       self.scrape_foreigner(doc) ||
