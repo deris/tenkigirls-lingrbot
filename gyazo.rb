@@ -38,7 +38,7 @@ content-disposition: form-data; name="imagedata"; filename="gyazo.com"\r
 --#{boundary}--\r
 EOF
 
-      header ={
+      header = {
         'Content-Length' => data.length.to_s,
         'Content-type' => "multipart/form-data; boundary=#{boundary}",
         'User-Agent' => 'Gyazo/1.0',
