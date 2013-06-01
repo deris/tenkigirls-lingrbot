@@ -63,7 +63,6 @@ module MSNWeather
 
   def self.scrape_foreigner(doc)
     anc = doc.css('div#localNav a').find {|node| /forecast:tenday$/ =~ node['href'] }
-
     return if anc.nil?
 
     doc = Nokogiri::HTML(open(TOP_URL + anc['href']))
