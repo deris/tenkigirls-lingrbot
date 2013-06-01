@@ -63,7 +63,7 @@ module MSNWeather
   end
 
   def self.scrape_foreigner(doc)
-    anc = doc.css('div#localNav a').find { |node| /forecast:tenday$/ =~ node['href'] }
+    anc = doc.css('div#localNav a').find {|node| /forecast:tenday$/ =~ node['href'] }
 
     return if anc.nil?
 
