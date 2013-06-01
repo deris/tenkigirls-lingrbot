@@ -126,8 +126,7 @@ module MSNWeather
   end
 
   def self.scrape_oneday(doc, id)
-    oneday = []
-    doc.css("div##{id} > div:nth-of-type(1)").each do |node|
+    doc.css("div##{id} > div:nth-of-type(1)").map {|node|
       date = node.children[0].text
       children = node.children[1].children
 
@@ -136,15 +135,13 @@ module MSNWeather
         worst = x if worst.nil? || worst[1].text.to_i < x[1].text.to_i
         worst
       end
-      oneday << {
+      {
         :day => date,
         :date => date,
         :url => weather[0].children[0]['src'],
         :weather => weather[0].children[1].text,
       }
-    end
-
-    oneday
+    }
   end
 
   def self.scrape_sixday(doc)
