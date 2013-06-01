@@ -40,8 +40,8 @@ module MSNWeather
     end
 
     self.scrape_japanese_spot(doc) ||
-    self.scrape_foreigner(doc) ||
-    self.scrape_japanese_area(doc)
+      self.scrape_foreigner(doc) ||
+      self.scrape_japanese_area(doc)
   end
 
   def search_date(city, date)
