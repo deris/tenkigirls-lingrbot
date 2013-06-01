@@ -35,12 +35,10 @@ module MSNWeather
     result = doc.css('table#results a').first
     result_city =
       if result
-        result_city = result.text
         doc = Nokogiri::HTML(open(TOP_URL + result['href']))
-        result_city
+        result.text
       else
-        result_city = city
-        result_city
+        city
       end
 
     self.scrape_japanese_spot(doc) ||
