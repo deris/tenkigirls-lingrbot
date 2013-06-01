@@ -44,7 +44,7 @@ EOF
         'User-Agent' => 'Gyazo/1.0',
       }
       env = ENV['http_proxy']
-      if env then
+      if env
         uri = URI(env)
         proxy_host, proxy_port = uri.host, uri.port
       else
