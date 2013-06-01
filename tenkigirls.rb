@@ -7,7 +7,10 @@ load 'msnweather.rb'
 #load 'gyazo.rb'
 
 get '/' do
-  "lingr:TenkiGirls"
+  {
+    lingr: 'TenkiGirls',
+    RUBY_DESCRIPTION: RUBY_DESCRIPTION,
+  }
 end
 
 post '/' do
