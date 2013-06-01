@@ -130,8 +130,8 @@ module MSNWeather
       date = node.children[0].text
       children = node.children[1].children
 
-      set = children[3,2].map {|x| x.children[1,4] }
-      weather = set[0].zip(set[1]).inject {|worst, x|
+      left, right = children[3,2].map {|x| x.children[1,4] }
+      weather = left.zip(right).inject {|worst, x|
         (worst[1].text.to_i < x[1].text.to_i) ? x : z
       }
       {
