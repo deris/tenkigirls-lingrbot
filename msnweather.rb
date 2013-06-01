@@ -79,7 +79,7 @@ module MSNWeather
     tenday = nil
     doc = Nokogiri::HTML(open(TOP_URL + anc['href']))
     doc.css('div#tenDay table').each do |node|
-      tenday = node.children[3,10].map do |day|
+      tenday = node.children[3,10].map {|day|
         td1 = day.children[0].children
         td2 = day.children[1].children
         {
@@ -88,7 +88,7 @@ module MSNWeather
           :url => td2[0]['src'],
           :weather => td2[1].text,
         }
-      end
+      }
     end
 
     tenday
