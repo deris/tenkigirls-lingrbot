@@ -122,7 +122,7 @@ module MSNWeather
 
       left, right = children[3,2].map {|x| x.children[1,4] }
       weather = left.zip(right).inject {|worst, x|
-        (worst[1].text.to_i < x[1].text.to_i) ? x : z
+        (worst[1].text.to_i < x[1].text.to_i) ? x : worst
       }
       {
         :day => date,
