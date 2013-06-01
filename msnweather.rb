@@ -149,7 +149,7 @@ module MSNWeather
       children = node.children
       # msn html has no closed angle bracket <table class="t3" <tr> ...
       children[1,5].zip(children[7].children[1,5]).each do |child|
-        sixday << {
+        {
           :day => child[0].text,
           :date => child[0].text,
           :url => child[1].children[0]['src'],
