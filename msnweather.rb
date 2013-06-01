@@ -44,7 +44,23 @@ module MSNWeather
     self.scrape_japanese_area(doc)
   end
 
-  module_function :weather, :weather_date, :search
+  def search_date(city, date)
+    forecast = self.search(city)
+    return if forecast.nil?
+
+    case date
+    when '今日'
+      forecast[0]
+    when '明日'
+      forecast[1]
+    when '明後日'
+      forecast[2]
+    else
+      nil
+    end
+  end
+
+  module_function :weather, :weather_date, :search, :search_date
 
   private
   def self.init_url
