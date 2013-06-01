@@ -34,7 +34,7 @@ module MSNWeather
     doc = Nokogiri::HTML(open(URI.escape(SEARCH_URL + city)))
     result = doc.css('table#results a').first
     result_city = city
-    if not result.nil?
+    if result
       result_city = result.text
       doc = Nokogiri::HTML(open(TOP_URL + result['href']))
     end
