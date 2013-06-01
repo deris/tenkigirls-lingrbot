@@ -145,8 +145,7 @@ module MSNWeather
   end
 
   def self.scrape_sixday(doc)
-    sixday = []
-    doc.css('div#sixday table').each do |node|
+    doc.css('div#sixday table').map {|node|
       children = node.children
       # msn html has no closed angle bracket <table class="t3" <tr> ...
       children[1,5].zip(children[7].children[1,5]).each do |child|
@@ -157,11 +156,8 @@ module MSNWeather
           :weather => child[1].children[1].text,
         }
       end
-    end
-
-    sixday
+    }
   end
-
 end
 
 __END__
