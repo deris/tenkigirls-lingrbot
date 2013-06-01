@@ -54,9 +54,10 @@ module MSNWeather
   def self.init_url
     @url_hash = {}
     Nokogiri::HTML(open('http://weather.jp.msn.com/worldtop.aspx')).
-      css('div#browseWorld + div a').each do |node|
-        @url_hash[node.text] = "#{node['href']}&q=forecast:tenday'" if
-          %r|^#{REGEX_URL}| =~ node['href']
+      css('div#browseWorld + div a').select {|node|
+        %r|^#{REGEX_URL}| =~ node['href']
+      }.each do |node|
+        @url_hash[node.text] = "#{node['href']}&q=forecast:tenday'"
       end
   end
 
