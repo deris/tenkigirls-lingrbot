@@ -2,7 +2,10 @@
 require 'cairo'
 require 'net/http'
 
-class String
+module StringToGyazo
+  $-v, v = nil, $-v
+  refine String do
+    $-v = v
   def to_gyazo
     out = StringIO.new
     image = Cairo::ImageSurface.from_png('image/tenkigirls.png')
@@ -51,5 +54,6 @@ EOF
       res = http.post('/upload.cgi', data, header)
       return res.response.body
     end
+  end
   end
 end
