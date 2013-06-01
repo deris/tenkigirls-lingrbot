@@ -131,10 +131,10 @@ module MSNWeather
       children = node.children[1].children
 
       set = children[3,2].map {|x| x.children[1,4]}
-      weather = set[0].zip(set[1]).inject(nil) do |worst, x|
+      weather = set[0].zip(set[1]).inject(nil) {|worst, x|
         worst = x if worst.nil? || worst[1].text.to_i < x[1].text.to_i
         worst
-      end
+      }
       {
         :day => date,
         :date => date,
