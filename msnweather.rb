@@ -47,7 +47,8 @@ module MSNWeather
   def search_date(city, date)
     forecast = self.search(city)
     return if forecast.nil?
-    forecast[%w[今日 明日 明後日][date]]
+    i = %w[今日 明日 明後日].index(date)
+    i && forecast[i]
   end
 
   module_function :weather, :weather_date, :search, :search_date
