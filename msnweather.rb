@@ -33,13 +33,15 @@ module MSNWeather
   def search(city)
     doc = Nokogiri::HTML(open(URI.escape(SEARCH_URL + city)))
     result = doc.css('table#results a').first
-    result_city = nil
-    if result
-      result_city = result.text
-      doc = Nokogiri::HTML(open(TOP_URL + result['href']))
-    else
-      result_city = city
-    end
+    result_city =
+      if result
+        result_city = result.text
+        doc = Nokogiri::HTML(open(TOP_URL + result['href']))
+        result_city
+      else
+        result_city = city
+        result_city
+      end
 
     self.scrape_japanese_spot(doc) ||
       self.scrape_foreigner(doc) ||
