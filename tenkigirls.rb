@@ -24,8 +24,8 @@ post '/' do
       city = $2 || $3
 
       wrap_livedoor_weather_date(city, date) ||
-      wrap_msn_weather_date(city, date) ||
-      wrap_msn_search_date(city, date)
+        wrap_msn_weather_date(city, date) ||
+        wrap_msn_search_date(city, date)
     when /^(.+)の天気((?:を?教えて)?)$/m
       tenki = LivedoorWether.weather_summary($1)
       #$2.empty? ? tenki : tenki.to_gyazo
