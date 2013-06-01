@@ -60,7 +60,7 @@ module MSNWeather
 
     return if anc.nil?
 
-    tenday = []
+    tenday = nil
     doc = Nokogiri::HTML(open(TOP_URL + anc['href']))
     doc.css('div#tenDay table').each do |node|
       tenday = node.children[3,10].map do |day|
