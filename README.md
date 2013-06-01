@@ -10,4 +10,4 @@ deris0126
 
 ## License
 
-GPL 3 or later (FIXME: deris will decide it!)
+GPL 3 or later
