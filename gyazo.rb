@@ -51,8 +51,7 @@ EOF
         proxy_host, proxy_port = nil, nil
       end
       Net::HTTP::Proxy(proxy_host, proxy_port).start('gyazo.com', 80) do |http|
-        res = http.post('/upload.cgi', data, header)
-        res.response.body
+        http.post('/upload.cgi', data, header).response.body
       end
     end
   end
