@@ -69,16 +69,16 @@ module MSNWeather
 
     doc = Nokogiri::HTML(open(TOP_URL + anc['href']))
     node = doc.css('div#tenDay table').last
-      node.children[3,10].map {|day|
-        td1 = day.children[0].children
-        td2 = day.children[1].children
-        {
-          :day => td1[0].text,
-          :date => td1[1].text,
-          :url => td2[0]['src'],
-          :weather => td2[1].text,
-        }
+    node.children[3,10].map {|day|
+      td1 = day.children[0].children
+      td2 = day.children[1].children
+      {
+        :day => td1[0].text,
+        :date => td1[1].text,
+        :url => td2[0]['src'],
+        :weather => td2[1].text,
       }
+    }
   end
 
   # 市区町村
