@@ -32,11 +32,11 @@ module MSNWeather
 
   def search(city)
     doc = Nokogiri::HTML(open(URI.escape(SEARCH_URL + city)))
-    result = doc.css('table#result').first
+    result = doc.css('table#results a').first
     result_city = city
     if not result.nil?
       result_city = result.text
-      doc = Nokogiri::HTML(open(result['href']))
+      doc = Nokogiri::HTML(open(TOP_URL + result['href']))
     end
 
     self.scrape_japanese_spot(doc) ||
@@ -80,6 +80,14 @@ module MSNWeather
 
   # 市区町村
   def self.scrape_japanese_area(doc)
+    today = self.scrape_oneday(doc, 'pptToday')
+
+    return if today.empty?
+
+    tommorow = self.scrape_oneday(doc, 'pptTomorrow')
+    sixday = self.scrape_sixday(doc)
+
+    return today + tommorow + sixday
   end
 
   # 代表都市
@@ -100,6 +108,28 @@ module MSNWeather
     sixday = self.scrape_sixday(doc)
 
     twoday + sixday
+  end
+
+  def self.scrape_oneday(doc, id)
+    oneday = []
+    doc.css("div##{id} > div:nth-of-type(1)").each do |node|
+      date = node.children[0].text
+      children = node.children[1].children
+
+      set = children[3,2].map {|x| x.children[1,4]}
+      weather = set[0].zip(set[1]).inject(nil) do |worst, x|
+        worst = x if worst.nil? || worst[1].text.to_i < x[1].text.to_i
+        worst
+      end
+      oneday << {
+        :day => date,
+        :date => date,
+        :url => weather[0].children[0]['src'],
+        :weather => weather[0].children[1].text,
+      }
+    end
+
+    oneday
   end
 
   def self.scrape_sixday(doc)
