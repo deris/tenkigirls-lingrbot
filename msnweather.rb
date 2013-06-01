@@ -108,16 +108,15 @@ module MSNWeather
 
   # 代表都市
   def self.scrape_japanese_spot(doc)
-    twoday = []
-    doc.css('div#twoday > div > div > div:first-child').each do |node|
+    twoday = doc.css('div#twoday > div > div > div:first-child').map {|node|
       children = node.children
-      twoday << {
+      {
         :day => children[0].text,
         :date => children[0].text,
         :url => children[1]['src'],
         :weather => children[2].text,
       }
-    end
+    }
 
     return if twoday.empty?
 
