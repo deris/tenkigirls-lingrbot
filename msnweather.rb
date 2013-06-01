@@ -21,7 +21,7 @@ module MSNWeather
     result = self.weather(city)
     return if result.nil?
 
-    forecast = result.find { |f| f[:day] == date }
+    forecast = result.find {|f| f[:day] == date }
 
     if options.key? :only
       forecast && forecast[options[:only]]
