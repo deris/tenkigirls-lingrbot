@@ -1,4 +1,4 @@
-require 'cairo'
+require 'mini_magick'
 require 'net/http'
 
 module StringToGyazo
@@ -7,21 +7,22 @@ module StringToGyazo
     $-v = v
     def to_gyazo
       out = StringIO.new
-      image = Cairo::ImageSurface.from_png('image/tenkigirls.png')
-      surface = Cairo::ImageSurface.new(image.width, image.height)
-      context = Cairo::Context.new(surface)
-      context.set_source(image, 0, 0)
-      context.paint
-      context.set_source_rgb(0, 0, 0)
-      context.select_font_face('MS Gothic', 0, 0)
-      context.font_size = 10
-      y = 0
+
+      image = MiniMagick::Image.open('image/tenkigirls.png')
+
+      y = 20
       self.lines.each do |line|
-        context.move_to(80, 20 + y)
-        context.show_text(line.strip)
+        image.combine_options do |c|
+          c.pointsize '10'
+          c.draw %Q{text 80,#{y} "#{line.strip}"}
+          c.font './font/uzura.ttf'
+          c.fill('#000000')
+        end
         y += 12
       end
-      surface.write_to_png(out)
+
+      image.write(out)
+
       boundary = '----BOUNDARYBOUNDARY----'
       id = "foo"
 
