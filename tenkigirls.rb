@@ -4,7 +4,8 @@ require 'sinatra'
 
 load 'livedoorweather.rb'
 load 'msnweather.rb'
-#load 'gyazo.rb'
+load 'gyazo.rb'
+
 
 get '/' do
   {
@@ -31,8 +32,8 @@ post '/' do
         wrap_msn_search_date(city, date)
     when /^(.+)の天気((?:を?教えて)?)$/m
       tenki = LivedoorWether.weather_summary($1)
-      #using StringToGyazo
-      #$2.empty? ? tenki : tenki.to_gyazo
+      using StringToGyazo
+      $2.empty? ? tenki : tenki.to_gyazo
     else
       # do nothing
       ''
