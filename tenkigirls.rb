@@ -42,8 +42,10 @@ post '/' do
 end
 
 def wrap_livedoor_weather_date(city, date)
-  tenki = LivedoorWether.weather_date(city, date, only: :image)
-  tenki && "#{tenki['title']}\n#{tenki['url']}"
+  tenki = LivedoorWether.weather_date(city, date, {})
+  tenki && "#{tenki['image']['title']}" +
+           " #{tenki['temperature']['max']['celsius']}℃/#{tenki['temperature']['min']['celsius']}℃" +
+           "\n#{tenki['image']['url']}"
 end
 
 def wrap_msn_weather_date(city, date)
