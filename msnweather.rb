@@ -119,6 +119,7 @@ module MSNWeather
     doc.css("div##{id}").map {|node|
       top_c = node.children
       div1_c = top_c[1].children
+      temperature = top_c[2].first_element_child.children[2].children
 
       date = div1_c[0].text
       children = div1_c[1].children
@@ -132,6 +133,10 @@ module MSNWeather
         :date => date,
         :url => weather[0].children[0]['src'],
         :weather => weather[0].children[1].text,
+        :temperature => {
+          :max => temperature[0].text,
+          :min => temperature[1].text,
+        },
       }
     }
   end
