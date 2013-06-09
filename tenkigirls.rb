@@ -57,7 +57,9 @@ end
 
 def wrap_msn_search_date(city, date)
   tenki = MSNWeather.search_date(city, date)
-  tenki && "#{tenki[:weather]}\n#{tenki[:url]}"
+  tenki && "#{tenki[:weather]}" +
+           " #{tenki[:temperature][:max]}/#{tenki[:temperature][:min]}" +
+           "\n#{tenki[:url]}"
 end
 
 HELP = 'XXXの%s で%s天気を教え'
