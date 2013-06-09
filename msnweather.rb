@@ -70,12 +70,16 @@ module MSNWeather
     node.children[3,10].map {|day|
       td1 = day.children[0].children
       td2 = day.children[1].children
+      temperature = td2[2].css('span').map {|t| t.text}
       {
         :day => td1[0].text,
         :date => td1[1].text,
         :url => td2[0]['src'],
         :weather => td2[1].text,
-        :temperature => td2[2].css('span').map {|t| t.text},
+        :temperature => {
+          :max => temperature[0],
+          :min => temperature[1],
+        },
       }
     }
   end
