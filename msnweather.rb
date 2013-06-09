@@ -75,6 +75,7 @@ module MSNWeather
         :date => td1[1].text,
         :url => td2[0]['src'],
         :weather => td2[1].text,
+        :temperature => td2[2].css('span').map {|t| t.text},
       }
     }
   end
