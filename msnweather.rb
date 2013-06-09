@@ -137,14 +137,14 @@ module MSNWeather
     doc.css('div#sixday table').map {|node|
       children = node.children
       # msn html has no closed angle bracket <table class="t3" <tr> ...
-      children[1,5].zip(children[7].children[1,5]).each do |child|
+      children[1,5].zip(children[7].children[1,5]).map { |child|
         {
           :day => child[0].text,
           :date => child[0].text,
           :url => child[1].children[0]['src'],
           :weather => child[1].children[1].text,
         }
-      end
+      }
     }
   end
 end
