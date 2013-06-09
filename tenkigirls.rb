@@ -43,8 +43,10 @@ end
 
 def wrap_livedoor_weather_date(city, date)
   tenki = LivedoorWether.weather_date(city, date, {})
+  max = tenki['temperature']['max'].nil? ? '--' : tenki['temperature']['max']['celsius']
+  min = tenki['temperature']['min'].nil? ? '--' : tenki['temperature']['min']['celsius']
   tenki && "#{tenki['image']['title']}" +
-           " #{tenki['temperature']['max']['celsius']}°C/#{tenki['temperature']['min']['celsius']}°C" +
+           " #{max}°C/#{min}°C" +
            "\n#{tenki['image']['url']}"
 end
 
