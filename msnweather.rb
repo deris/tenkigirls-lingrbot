@@ -116,9 +116,12 @@ module MSNWeather
   end
 
   def self.scrape_oneday(doc, id)
-    doc.css("div##{id} > div:nth-of-type(1)").map {|node|
-      date = node.children[0].text
-      children = node.children[1].children
+    doc.css("div##{id}").map {|node|
+      top_c = node.children
+      div1_c = top_c[1].children
+
+      date = div1_c[0].text
+      children = div1_c[1].children
 
       left, right = children[3,2].map {|x| x.children[1,4] }
       weather = left.zip(right).inject {|worst, x|
