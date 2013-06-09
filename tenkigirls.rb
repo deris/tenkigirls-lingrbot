@@ -44,7 +44,7 @@ end
 def wrap_livedoor_weather_date(city, date)
   tenki = LivedoorWether.weather_date(city, date, {})
   tenki && "#{tenki['image']['title']}" +
-           " #{tenki['temperature']['max']['celsius']}℃/#{tenki['temperature']['min']['celsius']}℃" +
+           " #{tenki['temperature']['max']['celsius']}°C/#{tenki['temperature']['min']['celsius']}°C" +
            "\n#{tenki['image']['url']}"
 end
 
