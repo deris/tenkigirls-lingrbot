@@ -100,6 +100,10 @@ module MSNWeather
         :date => children[0].text,
         :url => children[1]['src'],
         :weather => children[2].text,
+        :temperature => {
+          :max => children[3].text[/(?<=最高 ).*/],
+          :min => children[4].text[/(?<=最低 ).*/],
+        },
       }
     }
 
