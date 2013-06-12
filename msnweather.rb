@@ -66,12 +66,14 @@ module MSNWeather
     return if anc.nil?
 
     doc = Nokogiri::HTML(open(TOP_URL + anc['href']))
+    area = self.scrape_area(doc)
     node = doc.css('div#tenDay table').last
     node.children[3,10].map {|day|
       td1 = day.children[0].children
       td2 = day.children[1].children
       temperature = td2[2].css('span').map {|t| t.text}
       {
+        :area => area,
         :day => td1[0].text,
         :date => td1[1].text,
         :url => td2[0]['src'],
@@ -98,9 +100,11 @@ module MSNWeather
 
   # 代表都市
   def self.scrape_japanese_spot(doc)
+    area = self.scrape_area(doc)
     twoday = doc.css('div#twoday > div > div > div:first-child').map {|node|
       children = node.children
       {
+        :area => area,
         :day => children[0].text,
         :date => children[0].text,
         :url => children[1]['src'],
@@ -120,6 +124,7 @@ module MSNWeather
   end
 
   def self.scrape_oneday(doc, id)
+    area = self.scrape_area(doc)
     doc.css("div##{id}").map {|node|
       top_c = node.children
       div1_c = top_c[1].children
@@ -133,6 +138,7 @@ module MSNWeather
         (worst[1].text.to_i < x[1].text.to_i) ? x : worst
       }
       {
+        :area => area,
         :day => date,
         :date => date,
         :url => weather[0].children[0]['src'],
@@ -146,6 +152,7 @@ module MSNWeather
   end
 
   def self.scrape_sixday(doc)
+    area = self.scrape_area(doc)
     doc.css('div#sixday table').map {|node|
       children = node.children
       # msn html has no closed angle bracket <table class="t3" <tr> ...
@@ -155,6 +162,7 @@ module MSNWeather
         children[9].children[1,5],
         ).map { |child|
         {
+          :area => area,
           :day => child[0].text,
           :date => child[0].text,
           :url => child[1].children[0]['src'],
