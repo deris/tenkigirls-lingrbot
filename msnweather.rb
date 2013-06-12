@@ -167,6 +167,11 @@ module MSNWeather
       }
     }
   end
+
+  def self.scrape_area(doc)
+    doc.css('div#area1 > h1').children.select {|x| x.is_a? Nokogiri::XML::Text}.first.text.sub(/(?: 各地の予報)? *$/, '')
+  end
+
 end
 
 __END__
